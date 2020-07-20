@@ -7,7 +7,7 @@ const connection = mysql.createConnection({
   host: "localhost",
   port: 3306,
   user: "root",
-  password: "Shotei1717!",
+  password: "null",
   database: "employees_DB",
 });
 
@@ -70,7 +70,7 @@ employeeSearch();
 function viewallDepartments() {
   connection.query("SELECT * FROM department", (err, res) => {
     if (err) throw err;
-    console.log(res);
+    // console.log(res);
     console.table(res);
     employeeSearch();
   });
@@ -79,7 +79,8 @@ function viewallDepartments() {
 function viewallRoles() {
   connection.query("SELECT * FROM roles", (err, res) => {
     if (err) throw err;
-    console.log(res);
+    // console.log(res);
+    console.table(res);
     employeeSearch();
   });
 }
@@ -87,7 +88,8 @@ function viewallRoles() {
 function viewallEmployees() {
   connection.query("SELECT * FROM employee", (err, res) => {
     if (err) throw err;
-    console.log(res);
+    // console.log(res);
+    console.table(res);
     employeeSearch();
   });
 }
@@ -106,7 +108,7 @@ function addnewDepartment() {
         `INSERT INTO department(department_name) VALUES ("${res.department}")`,
         (err, res) => {
           if (err) throw err;
-          console.log(res);
+          // console.log(res);
           console.table(res);
           employeeSearch();
         }
@@ -145,7 +147,7 @@ function addnewRole() {
           `INSERT INTO roles(title, salary, department_id) VALUES ("${res.title}", "${res.salary}", "${res.department}")`,
           (err, res) => {
             if (err) throw err;
-            console.log(res);
+            // console.log(res);
             console.table(res);
             employeeSearch();
           }
