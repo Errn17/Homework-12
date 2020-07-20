@@ -7,7 +7,7 @@ const connection = mysql.createConnection({
   host: "localhost",
   port: 3306,
   user: "root",
-  password: "null",
+  password: "Shotei1717!",
   database: "employees_DB",
 });
 
@@ -114,12 +114,46 @@ function addnewDepartment() {
     });
 }
 
-// function addnewRole() {
-//   connection.query(`SELECT * FROM department`, (err, department) => {
-//     if (err) throw err;
-//     // const dep
-//   })
-// }
+function addnewRole() {
+  connection.query("SELECT * FROM department", (err, res) => {
+    if (err) throw err;
+    const depRole = res.map(({ id, department_name }) => ({
+      name: department_name,
+      value: id,
+    }));
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          name: "title",
+          message: "What's the title of the new role?",
+        },
+        {
+          type: "input",
+          name: "salary",
+          message: "What's the salary of the new role?",
+        },
+        {
+          type: "input",
+          name: "department",
+          message: "What's the department of the new role?",
+          choices: depRole,
+        },
+      ])
+      .then((res) => {
+        connection.query(
+          `INSERT INTO roles(title, salary, department_id) VALUES ("${res.title}", "${res.salary}", "${res.department}")`,
+          (err, res) => {
+            if (err) throw err;
+            console.log(res);
+            console.table(res);
+            employeeSearch();
+          }
+        );
+        console.log("Successfully added new Role!");
+      });
+  });
+}
 
 function exitApp() {
   console.log("You are now exiting the application");
